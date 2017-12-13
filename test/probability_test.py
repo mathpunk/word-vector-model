@@ -28,8 +28,8 @@ def test_unigram_counts_unique_words():
 
 
 def test_unigram_probabilities_is_a_probability_distribution():
-    distribution = Distribution.probability(document)
-    other_distribution = Distribution.probability(other_document)
+    distribution = Distribution.unigram_probabilities(document)
+    other_distribution = Distribution.unigram_probabilities(other_document)
     probabilities = distribution.values()
     other_probabilities = other_distribution.values()
     assert all(p > 0 for p in probabilities)
@@ -38,3 +38,4 @@ def test_unigram_probabilities_is_a_probability_distribution():
     assert sum(other_probabilities) < 2
     assert sum(probabilities) == approx(1.0)
     assert sum(other_probabilities) == approx(1.0)
+
