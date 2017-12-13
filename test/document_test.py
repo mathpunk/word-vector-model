@@ -21,8 +21,7 @@ def test_normalization():
 
 
 def test_window_computation():
-    window = document.get_window(radius=3, index=0)
-    assert any(word == "st" for word in window)
-    assert any(word == "louis" for word in window)
-    # window won't remove the input word though!
-    assert any(word == "the" for word in window)
+    neighborhood = document.nearby_words(radius=3, index=0)
+    assert any(word == "st" for word in neighborhood)
+    assert any(word == "louis" for word in neighborhood)
+    assert any(word != "the" for word in neighborhood)

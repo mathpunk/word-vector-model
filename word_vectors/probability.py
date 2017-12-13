@@ -27,8 +27,8 @@ class Distribution:
         counts = {}
         input_index = 0
         input_word = normalized[input_index]
-        window = data.get_window(index=input_index, radius=Distribution.window_radius)
-        nearby_words = filter(lambda w: w != input_word, window)
+        radius = Distribution.window_radius
+        nearby_words = data.nearby_words(index=input_index, radius=radius)
         counter = Counter(nearby_words)
         counts[input_word] = counter
         return counts
