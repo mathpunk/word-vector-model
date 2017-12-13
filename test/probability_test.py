@@ -7,29 +7,29 @@ other_content = "Hello, world!"
 document = Document(content)
 other_document = Document(other_content)
 
+unigram_counts = Distribution.count(document)
+other_unigram_counts = Distribution.count(Document("Hello, world"))
+
 
 def test_unigram_counts():
-    unigram_counts = Distribution.count(document)
     assert unigram_counts['fox'] == 1
     assert unigram_counts['the'] == 2
     assert unigram_counts.get('dog.', 0) == 0
-    unigram_counts_too = Distribution.count(Document("Hello, world"))
-    assert unigram_counts_too['world'] == 1
-    assert unigram_counts_too['Hello,'] == 0
-    assert unigram_counts_too['hello'] == 1
+    assert other_unigram_counts['world'] == 1
+    assert other_unigram_counts['Hello,'] == 0
+    assert other_unigram_counts['hello'] == 1
 
 
 def test_unigram_counts_unique_words():
     words = document.normalized()
-    distribution = Distribution.count(document)
+    unique_words_noted = list(unigram_counts)
     vocabulary = set(words)
-    len(vocabulary) == len(list(distribution))
+    len(vocabulary) == len(unique_words_noted)
 
 
 def test_unigram_probabilities_is_a_probability_distribution():
     distribution = Distribution.probability(document)
     other_distribution = Distribution.probability(other_document)
-
     probabilities = distribution.values()
     other_probabilities = other_distribution.values()
     assert all(p > 0 for p in probabilities)
