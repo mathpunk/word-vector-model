@@ -3,22 +3,26 @@ from word_vectors.document import Document
 
 test_document = "The St. Louis plant had to close. It would die of old age. Workers had been making cars there since the onset of mass automotive production in the 1920s."
 
+document = Document(test_document)
+normalized = document.normalized()
+
 
 def test_document_creation():
-    document = Document(test_document)
     assert type(document.content) == str
 
 
 def test_tokenization():
-    document = Document(test_document)
-    normalized = document.normalized()
     assert type(normalized) == list
     assert len(normalized) == 29
 
 
 def test_normalization():
-    document = Document(test_document)
-    normalized = document.normalized()
     assert all(word.islower() for word in normalized)
 
 
+def test_window_computation():
+    window = document.get_window(radius=3, index=0)
+    assert any(word == "st" for word in window)
+    assert any(word == "louis" for word in window)
+    # window won't remove the input word though!
+    assert any(word == "the" for word in window)
