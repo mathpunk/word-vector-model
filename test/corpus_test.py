@@ -12,4 +12,3 @@ def test_corpus_creation():
     len(corpus.documents) > 0
     assert type(document) == str
     assert document == test_document
-
